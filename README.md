@@ -1,6 +1,6 @@
-# Linux + RT-Thread AMP Solar Monitoring Terminal
+# RT-Thread AMP 光伏自供能智能监测终端
 
-本仓库为“基于 Linux + RT-Thread AMP 混合架构的户外光伏自供能智能监测终端”的项目资料仓库，包含能源侧硬件资料、RT-Thread 功率控制固件、Linux 端边缘服务代码、构建说明和发布文档。
+本仓库为“全国大学生嵌入式芯片与系统设计竞赛 2026”芯片应用赛道睿赛德赛题参赛项目资料仓库，作品名称为“基于 Linux + RT-Thread AMP 混合架构的户外光伏自供能智能监测终端”。仓库内容覆盖能源侧硬件资料、RT-Thread 功率控制固件、RK3506 Linux 端边缘服务代码、构建说明和发布文档。
 
 ## 项目简介
 
