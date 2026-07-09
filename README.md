@@ -33,6 +33,11 @@
 | `firmware/bus-ups-controller/` | STM32G474RET6 + RT-Thread 的电池/UPS/直流母线管理固件 |
 | `software/rk3506-linux/` | RK3506 Linux 侧关键代码，包含 rpmsg/设备通信、MQTT 心跳、语音助手和边缘代理 |
 | `docs/firmware/` | 固件架构、构建说明和发布检查清单 |
+| Web Dashboard | 独立仓库：[kqrekybjinn/energy-dashboard](https://github.com/kqrekybjinn/energy-dashboard)，用于浏览器端状态展示、通道控制和曲线查看 |
+
+## 关联仓库
+
+- Web Dashboard：[kqrekybjinn/energy-dashboard](https://github.com/kqrekybjinn/energy-dashboard)
 
 ## 核心能力
 
