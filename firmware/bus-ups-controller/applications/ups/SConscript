@@ -1,0 +1,11 @@
+from building import *
+
+cwd = GetCurrentDir()
+src = Glob('*.c')
+src = [item for item in src if 'ups_oled.c' not in str(item)]
+CPPPATH = [cwd]
+
+group = DefineGroup('Applications', src, depend = [''], CPPPATH = CPPPATH)
+
+Return('group')
+

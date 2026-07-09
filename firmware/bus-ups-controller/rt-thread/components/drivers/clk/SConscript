@@ -1,0 +1,22 @@
+from building import *
+
+group = []
+
+if not GetDepend(['RT_USING_CLK']):
+    Return('group')
+
+cwd = GetCurrentDir()
+list = os.listdir(cwd)
+CPPPATH = [cwd + '/../include']
+
+src = ['clk.c']
+
+if GetDepend(['RT_USING_OFW']):
+    src += ['clk-fixed-rate.c']
+
+if GetDepend(['RT_CLK_SCMI']):
+    src += ['clk-scmi.c']
+
+group = DefineGroup('DeviceDrivers', src, depend = [''], CPPPATH = CPPPATH)
+
+Return('group')

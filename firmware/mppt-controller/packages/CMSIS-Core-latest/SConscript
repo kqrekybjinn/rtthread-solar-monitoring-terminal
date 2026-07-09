@@ -1,0 +1,10 @@
+from building import *
+import os
+
+src   = []
+cwd = GetCurrentDir()
+path = [os.path.join(cwd, 'Include')]
+
+group = DefineGroup('CMSIS-Core', src, depend = ['PKG_USING_CMSIS_CORE'], CPPPATH = path)
+
+Return('group')

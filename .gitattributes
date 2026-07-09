@@ -1,0 +1,11 @@
+# Keep language statistics focused on project-owned code.
+firmware/*/rt-thread/** linguist-vendored
+firmware/*/libraries/** linguist-vendored
+firmware/*/packages/** linguist-vendored
+firmware/*/board/CubeMX_Config/Drivers/** linguist-vendored
+
+*.pdf binary
+*.zip binary
+*.png binary
+*.jpg binary
+*.jpeg binary

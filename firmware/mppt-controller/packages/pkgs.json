@@ -1,0 +1,17 @@
+[
+ {
+  "name": "CMSIS_CORE",
+  "path": "/packages/system/CMSIS/CMSIS-Core",
+  "ver": "latest"
+ },
+ {
+  "name": "STM32G4_HAL_DRIVER",
+  "path": "/packages/peripherals/hal-sdk/stm32/stm32g4_hal_driver",
+  "ver": "latest"
+ },
+ {
+  "name": "STM32G4_CMSIS_DRIVER",
+  "path": "/packages/peripherals/hal-sdk/stm32/stm32g4_cmsis_driver",
+  "ver": "latest"
+ }
+]

@@ -1,0 +1,46 @@
+import os
+import rtconfig
+import subprocess
+from building import *
+
+group   = []
+cwd     = GetCurrentDir()
+CPPPATH = [cwd, cwd + "/kernel"]
+list    = os.listdir(cwd)
+src     = Glob('kernel/*.c') + Glob('kernel/*.S')
+
+if not GetDepend(['RT_USING_VDSO']):
+    Return('group')
+
+if rtconfig.ARCH != "aarch64" and rtconfig.ARCH != "risc-v" and rtconfig.ARCH != "arm":
+    # not supported arch
+    src = []
+elif rtconfig.ARCH == "arm" and rtconfig.CPU != "cortex-a":
+    # not supported arch
+    src = []
+else:
+    vdso_user = os.path.join(cwd, 'user')
+
+    process_env = os.environ.copy()
+    if hasattr(rtconfig, 'EXEC_PATH') and rtconfig.EXEC_PATH is not None:
+        process_env['RTT_EXEC_PATH'] = rtconfig.EXEC_PATH
+    if hasattr(rtconfig, 'PREFIX') and rtconfig.PREFIX is not None:
+        process_env['RTT_CC_PREFIX'] = rtconfig.PREFIX
+    if hasattr(rtconfig, 'DEVICE') and rtconfig.DEVICE is not None:
+        process_env['RTT_DEVICE'] = rtconfig.DEVICE
+
+    command = ["scons", "-C", vdso_user, "RTT_VDSO_ARCH=%s" % rtconfig.ARCH]
+    if GetOption('clean'):
+        command = ["scons", "-C", vdso_user, "RTT_VDSO_ARCH=%s" % rtconfig.ARCH, "--clean"]
+
+    try:
+        result = subprocess.run(command, env=process_env, check=True)
+    # generic error handle
+    except :
+        print('exec command: "%s" failed.' % ' '.join(command))
+        exit(1)
+
+    print("Command executed successfully")
+
+group = DefineGroup('lwProcess', src, depend = ['RT_USING_SMART','RT_USING_VDSO'], CPPPATH = CPPPATH)
+Return('group')

@@ -1,0 +1,43 @@
+# Build outputs
+build/
+Debug/
+Release/
+*.elf
+*.map
+*.bin
+*.hex
+*.axf
+*.uimg
+*.lst
+*.out
+*.o
+*.obj
+*.d
+*.dep
+*.lib
+
+# RT-Thread/SCons generated files
+.sconsign.dblite
+rtconfig.pyc
+__pycache__/
+*.pyc
+
+# IDE/debug generated files
+.vscode/
+JLinkLog.txt
+JLinkSettings.ini
+DebugConfig/
+RTE/
+settings/
+*.uvguix*
+
+# Local backups and temporary files
+*.bak
+*.bak_*
+*.bak_before_*
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+tmp/
+output/

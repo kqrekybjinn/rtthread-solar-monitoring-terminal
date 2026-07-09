@@ -1,0 +1,90 @@
+menuconfig RT_USING_RTC
+    bool "Using RTC device drivers"
+    default n
+
+    if RT_USING_RTC
+        config RT_USING_ALARM
+            bool "Using RTC alarm"
+            default n
+
+        if RT_USING_ALARM
+            config RT_ALARM_STACK_SIZE
+                int "stack size for alarm thread"
+                default IDLE_THREAD_STACK_SIZE
+
+            config RT_ALARM_TIMESLICE
+                int "timeslice for alarm thread"
+                default 5
+
+            config RT_ALARM_PRIORITY
+                int "priority for alarm thread"
+                default 10
+
+            config RT_ALARM_USING_LOCAL_TIME
+                bool "Using local time for the alarm calculation"
+                default n
+                depends on RT_USING_ALARM
+        endif
+
+        config RT_USING_SOFT_RTC
+            bool "Using software simulation RTC device"
+            default n
+    endif
+
+config RT_RTC_DS1302
+    bool "Dallas/Maxim DS1302"
+    depends on RT_USING_DM
+    depends on RT_USING_RTC
+    depends on RT_USING_SPI
+    default n
+
+config RT_RTC_DS1307
+    bool "Dallas/Maxim DS1307/37/38/39/40, ST M41T11"
+    depends on RT_USING_DM
+    depends on RT_USING_RTC
+    depends on RT_USING_I2C
+    default n
+
+config RT_RTC_GOLDFISH
+    bool "Goldfish Real Time Clock"
+    depends on RT_USING_DM
+    depends on RT_USING_RTC
+    default n
+
+config RT_RTC_HYM8563
+    bool "Haoyu Microelectronics HYM8563"
+    depends on RT_USING_DM
+    depends on RT_USING_RTC
+    depends on RT_USING_I2C
+    default n
+
+config RT_RTC_PCF8523
+    bool "NXP PCF8523"
+    depends on RT_USING_DM
+    depends on RT_USING_RTC
+    depends on RT_USING_I2C
+    default n
+
+config RT_RTC_PCF8563
+    bool "Philips PCF8563/Epson RTC8564"
+    depends on RT_USING_DM
+    depends on RT_USING_RTC
+    depends on RT_USING_I2C
+    default n
+
+config RT_RTC_PL031
+    bool "ARM PL031"
+    depends on RT_USING_DM
+    depends on RT_USING_RTC
+    default n
+
+config RT_RTC_RX8010
+    bool "Epson RX8010SJ"
+    depends on RT_USING_DM
+    depends on RT_USING_RTC
+    depends on RT_USING_I2C
+    default n
+
+if RT_USING_DM && RT_USING_RTC
+    osource "$(SOC_DM_RTC_DIR)/Kconfig"
+endif

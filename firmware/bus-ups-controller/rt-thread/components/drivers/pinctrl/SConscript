@@ -1,0 +1,22 @@
+from building import *
+
+group = []
+
+if not GetDepend(['RT_USING_PINCTRL']):
+    Return('group')
+
+cwd = GetCurrentDir()
+list = os.listdir(cwd)
+CPPPATH = [cwd + '/../include']
+
+src = ['pinctrl.c']
+
+if GetDepend(['RT_PINCTRL_SCMI']):
+    src += ['pinctrl-scmi.c']
+
+if GetDepend(['RT_PINCTRL_SINGLE']):
+    src += ['pinctrl-single.c']
+
+group = DefineGroup('DeviceDrivers', src, depend = [''], CPPPATH = CPPPATH)
+
+Return('group')

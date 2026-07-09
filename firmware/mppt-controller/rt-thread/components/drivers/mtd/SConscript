@@ -1,0 +1,27 @@
+from building import *
+
+cwd = GetCurrentDir()
+src = []
+depend = ['']
+
+CPPPATH = [cwd + '/../include']
+group = []
+
+if GetDepend(['RT_USING_MTD_NOR']):
+    src += ['mtd_nor.c']
+    depend += ['RT_USING_MTD_NOR']
+
+if GetDepend(['RT_USING_MTD_NAND']):
+    src += ['mtd_nand.c']
+    depend += ['RT_USING_MTD_NAND']
+
+if GetDepend(['RT_USING_MTD_NOR_CFI']):
+    src += ['mtd-cfi.c']
+
+if GetDepend(['RT_USING_MTD_NOR_SPI']):
+    src += ['mtd-spi-nor.c']
+
+if src:
+    group = DefineGroup('DeviceDrivers', src, depend = depend, CPPPATH = CPPPATH)
+
+Return('group')

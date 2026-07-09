@@ -1,0 +1,15 @@
+*.GTL linguist-generated=false
+*.GBL linguist-generated=false
+*.GTO linguist-generated=false
+*.GBO linguist-generated=false
+*.GTS linguist-generated=false
+*.GBS linguist-generated=false
+*.GTP linguist-generated=false
+*.GBP linguist-generated=false
+*.GKO linguist-generated=false
+*.GDL linguist-generated=false
+*.GDD linguist-generated=false
+*.DRL linguist-generated=false
+*.pdf binary
+*.zip binary
+*.png binary

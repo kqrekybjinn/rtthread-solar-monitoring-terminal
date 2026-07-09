@@ -1,0 +1,21 @@
+# OS/editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+*.bak
+*.bak_*
+*.bak_before_*
+*~
+
+# Generated local outputs
+output/
+tmp/
+__pycache__/
+*.pyc
+
+# Keep fabrication archives tracked intentionally.
+!hardware/fabrication/*.zip
+
+# Keep rendered documentation images tracked intentionally.
+!docs/images/*.png
