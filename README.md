@@ -1,6 +1,6 @@
 # Linux + RT-Thread AMP Solar Monitoring Terminal
 
-本仓库为“基于 Linux + RT-Thread AMP 混合架构的户外光伏自供能智能监测终端”的统一开源仓库，包含能源侧硬件资料、RT-Thread 功率控制固件、Linux 端边缘服务代码、构建说明和开源发布文档。
+本仓库为“基于 Linux + RT-Thread AMP 混合架构的户外光伏自供能智能监测终端”的项目资料仓库，包含能源侧硬件资料、RT-Thread 功率控制固件、Linux 端边缘服务代码、构建说明和发布文档。
 
 ## 项目简介
 
@@ -13,10 +13,6 @@
 ```text
 .
 ├── README.md
-├── LICENSE.md
-├── LICENSES/
-│   ├── Apache-2.0.txt
-│   └── CERN-OHL-P-2.0.txt
 ├── docs/
 │   └── firmware/
 ├── firmware/
@@ -28,7 +24,7 @@
     └── rk3506-linux/
 ```
 
-## 开源内容
+## 仓库内容
 
 | 路径 | 内容 |
 | --- | --- |
@@ -36,7 +32,7 @@
 | `firmware/mppt-controller/` | STM32G474RET6 + RT-Thread 的 MPPT 功率控制固件 |
 | `firmware/bus-ups-controller/` | STM32G474RET6 + RT-Thread 的电池/UPS/直流母线管理固件 |
 | `software/rk3506-linux/` | RK3506 Linux 侧关键代码，包含 rpmsg/设备通信、MQTT 心跳、语音助手和边缘代理 |
-| `docs/firmware/` | 固件架构、构建说明和开源检查清单 |
+| `docs/firmware/` | 固件架构、构建说明和发布检查清单 |
 
 ## 核心能力
 
@@ -60,13 +56,3 @@ docs/firmware/BUILD.md
 ## 安全说明
 
 本项目涉及光伏输入、电池充放电、大电流 DC-DC、直流母线和后级逆变扩展。打样和上电前必须配合限流电源、保险丝、BMS、电子负载、隔离调试和必要的硬件过压/过流/过温保护。软件保护不能替代硬件保护。
-
-## 许可证
-
-本仓库采用混合许可证：
-
-- 固件自研代码采用 `Apache-2.0`。
-- 硬件资料采用 `CERN-OHL-P-2.0`。
-- 随工程包含的 RT-Thread、STM32 HAL/CMSIS 等第三方组件保留其原始许可证和版权声明。
-
-详细说明见 `LICENSE.md` 和 `LICENSES/`。

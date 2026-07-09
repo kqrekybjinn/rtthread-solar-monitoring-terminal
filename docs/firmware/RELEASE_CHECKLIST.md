@@ -1,4 +1,4 @@
-# Open Source Checklist
+# Release Checklist
 
 ## 已整理
 
@@ -6,7 +6,7 @@
 - 已排除 `build/`、`.vscode/`、`__pycache__/`。
 - 已排除 `*.elf`、`*.bin`、`*.hex`、`*.map`、`*.pyc`、`.sconsign.dblite`。
 - 已排除 `*.bak`、`*.bak_*`、`*.bak_before_*` 历史备份。
-- 已添加根目录 README、架构说明、构建说明和开源检查清单。
+- 已添加根目录 README、架构说明、构建说明和发布检查清单。
 
 ## 发布前检查
 
@@ -14,7 +14,7 @@
 - 确认 `.config`、`rtconfig.h`、`SConstruct`、`SConscript` 已保留。
 - 确认 `board/CubeMX_Config/CubeMX_Config.ioc` 与当前硬件引脚一致。
 - 确认 README 没有宣称尚未实测的高功率能力。
-- 确认第三方组件许可证文件保留。
+- 确认第三方组件自带的必要声明保留在对应组件目录内。
 
 ## 后续建议
 
