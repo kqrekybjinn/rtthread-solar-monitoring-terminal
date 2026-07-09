@@ -1,6 +1,6 @@
 # Linux + RT-Thread AMP Solar Monitoring Terminal
 
-本仓库为“基于 Linux + RT-Thread AMP 混合架构的户外光伏自供能智能监测终端”的统一开源仓库，包含能源侧硬件资料、RT-Thread 功率控制固件、构建说明和开源发布文档。
+本仓库为“基于 Linux + RT-Thread AMP 混合架构的户外光伏自供能智能监测终端”的统一开源仓库，包含能源侧硬件资料、RT-Thread 功率控制固件、Linux 端边缘服务代码、构建说明和开源发布文档。
 
 ## 项目简介
 
@@ -22,8 +22,10 @@
 ├── firmware/
 │   ├── mppt-controller/
 │   └── bus-ups-controller/
-└── hardware/
-    └── mppt-power-node/
+├── hardware/
+│   └── mppt-power-node/
+└── software/
+    └── rk3506-linux/
 ```
 
 ## 开源内容
@@ -33,6 +35,7 @@
 | `hardware/mppt-power-node/` | PCB-02 光伏 MPPT 功率控制节点硬件资料，包含原理图 PDF、Gerber/Drill 生产文件和接口说明 |
 | `firmware/mppt-controller/` | STM32G474RET6 + RT-Thread 的 MPPT 功率控制固件 |
 | `firmware/bus-ups-controller/` | STM32G474RET6 + RT-Thread 的电池/UPS/直流母线管理固件 |
+| `software/rk3506-linux/` | RK3506 Linux 侧关键代码，包含 rpmsg/设备通信、MQTT 心跳、语音助手和边缘代理 |
 | `docs/firmware/` | 固件架构、构建说明和开源检查清单 |
 
 ## 核心能力
@@ -40,6 +43,7 @@
 - Linux + RT-Thread AMP 分层架构：Linux 负责智能服务，RT-Thread 负责实时控制。
 - MPPT 光伏充电：双 INA226 采样、NTC/ADC 温度采样、CC-CV 控制和故障锁存。
 - BUS/UPS 能量管理：外部输入、电池电压、受控输出、DAC CC/CV、EC11、状态统计。
+- RK3506 Linux 边缘服务：rpmsg 通信测试、MQTT 心跳上报、语音助手脚本和受限智能体动作分发。
 - 面向上级主控的 CAN 协同控制接口预留。
 - RT-Thread MSH 命令行调试接口，便于上板测试和课程/竞赛演示。
 
