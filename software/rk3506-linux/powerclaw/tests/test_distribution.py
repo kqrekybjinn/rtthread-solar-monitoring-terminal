@@ -106,10 +106,17 @@ def main():
                    "scripts/package-release.sh", "scripts/install-board.sh"):
         subprocess.run(["sh", "-n", str(root / script)], check=True)
     init_text = (root / "S97powerclaw").read_text(encoding="ascii")
+    install_text = (root / "scripts" / "install-board.sh").read_text(encoding="ascii")
     check("stat -c" not in init_text,
           "init script depends on GNU stat, which is absent on the board")
     check('"-rw-------"' in init_text,
           "init script must enforce mode 0600 for the credential file")
+    check('channel start >>"$LOG_FILE"' in init_text,
+          "init script must start the messaging channel server")
+    check('powerclaw-agent" gateway' not in init_text,
+          "gateway alone does not run Feishu channel listeners")
+    check('agents/powerclaw/workspace' in install_text,
+          "PowerClaw identity must be installed in the agent alias workspace")
     print("powerclaw distribution tests: PASS")
 
 

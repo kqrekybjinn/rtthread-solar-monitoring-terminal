@@ -38,7 +38,7 @@ start_service()
     export HOME="$ROOT/home"
     export ZEROCLAW_CONFIG="$ROOT/config/config.toml"
     cd "$ROOT/workspace" || return 1
-    "$ROOT/bin/powerclaw-agent" gateway >>"$LOG_FILE" 2>&1 &
+    "$ROOT/bin/powerclaw-agent" --config-dir "$ROOT/home/.zeroclaw" channel start >>"$LOG_FILE" 2>&1 &
     echo $! >"$PID_FILE"
 }
 

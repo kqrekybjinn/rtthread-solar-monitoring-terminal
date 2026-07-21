@@ -4,8 +4,10 @@ set -eu
 SOURCE=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 TARGET=/userdata/powerclaw
 
-mkdir -p "$TARGET/bin" "$TARGET/config" "$TARGET/workspace" "$TARGET/logs" "$TARGET/home"
-chmod 700 "$TARGET" "$TARGET/config" "$TARGET/logs" "$TARGET/home"
+AGENT_WORKSPACE="$TARGET/home/.zeroclaw/agents/powerclaw/workspace"
+
+mkdir -p "$TARGET/bin" "$TARGET/config" "$TARGET/workspace" "$TARGET/logs" "$TARGET/home" "$AGENT_WORKSPACE"
+chmod 700 "$TARGET" "$TARGET/config" "$TARGET/logs" "$TARGET/home" "$AGENT_WORKSPACE"
 install -m 0755 "$SOURCE/bin/powerclaw-agent" "$TARGET/bin/powerclaw-agent"
 install -m 0755 "$SOURCE/bin/powerclaw-device-mcp" "$TARGET/bin/powerclaw-device-mcp"
 install -m 0644 "$SOURCE/config/config.toml.dist" "$TARGET/config/config.toml.dist"
@@ -13,6 +15,7 @@ if [ ! -f "$TARGET/config/config.toml" ]; then
     install -m 0600 "$SOURCE/config/config.toml.dist" "$TARGET/config/config.toml"
 fi
 install -m 0644 "$SOURCE/workspace/SOUL.md" "$TARGET/workspace/SOUL.md"
+install -m 0644 "$SOURCE/workspace/SOUL.md" "$AGENT_WORKSPACE/SOUL.md"
 install -m 0644 "$SOURCE/LICENSE-APACHE" "$TARGET/LICENSE-APACHE"
 install -m 0644 "$SOURCE/LICENSE-MIT" "$TARGET/LICENSE-MIT"
 install -m 0644 "$SOURCE/NOTICE-ZEROCLAW" "$TARGET/NOTICE-ZEROCLAW"
