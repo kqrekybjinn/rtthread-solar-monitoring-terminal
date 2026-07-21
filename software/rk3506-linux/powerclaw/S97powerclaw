@@ -1,0 +1,58 @@
+#!/bin/sh
+
+ROOT=/userdata/powerclaw
+ENV_FILE="$ROOT/powerclaw.env"
+PID_FILE=/run/powerclaw.pid
+LOG_FILE="$ROOT/logs/powerclaw.log"
+
+start_service()
+{
+    [ -x "$ROOT/bin/powerclaw-agent" ] || return 0
+    [ -x "$ROOT/bin/powerclaw-device-mcp" ] || return 0
+    [ -r "$ENV_FILE" ] || return 0
+
+    listing="$(ls -ld "$ENV_FILE" 2>/dev/null)" || return 1
+    set -- $listing
+    permissions="${1:-unknown}"
+    if [ "$permissions" != "-rw-------" ]; then
+        echo "powerclaw: refusing insecure $ENV_FILE permissions $permissions" >&2
+        return 1
+    fi
+
+    set -a
+    . "$ENV_FILE"
+    set +a
+    [ "${POWERCLAW_ENABLED:-0}" = "1" ] || return 0
+
+    if [ -s "$PID_FILE" ] && kill -0 "$(cat "$PID_FILE")" 2>/dev/null; then
+        return 0
+    fi
+    if ! wget -qO- http://127.0.0.1:18080/api/v1/capabilities >/dev/null; then
+        echo "powerclaw: device-core is not ready" >&2
+        return 1
+    fi
+
+    mkdir -p "$ROOT/logs" "$ROOT/home/.zeroclaw"
+    chmod 700 "$ROOT" "$ROOT/logs" "$ROOT/home" "$ROOT/home/.zeroclaw"
+    ln -sf ../../config/config.toml "$ROOT/home/.zeroclaw/config.toml"
+    export HOME="$ROOT/home"
+    export ZEROCLAW_CONFIG="$ROOT/config/config.toml"
+    cd "$ROOT/workspace" || return 1
+    "$ROOT/bin/powerclaw-agent" gateway >>"$LOG_FILE" 2>&1 &
+    echo $! >"$PID_FILE"
+}
+
+stop_service()
+{
+    if [ -s "$PID_FILE" ]; then
+        kill "$(cat "$PID_FILE")" 2>/dev/null || true
+        rm -f "$PID_FILE"
+    fi
+}
+
+case "${1:-}" in
+    start) start_service ;;
+    stop) stop_service ;;
+    restart) stop_service; start_service ;;
+    *) echo "Usage: $0 {start|stop|restart}" >&2; exit 2 ;;
+esac

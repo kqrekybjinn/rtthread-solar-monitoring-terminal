@@ -1,0 +1,180 @@
+schema_version = 3
+
+[providers.models.custom.power]
+uri = "https://api.deepseek.com/v1"
+model = "deepseek-chat"
+api_key = ""
+temperature = 0.2
+timeout_secs = 60
+max_tokens = 2048
+
+[risk_profiles.power_readonly]
+level = "readonly"
+workspace_only = true
+allowed_tools = [
+  "power_device__system_status",
+  "power_device__mqtt_status",
+  "power_device__amp_status",
+  "power_device__capabilities",
+]
+excluded_tools = [
+  "shell",
+  "process",
+  "file_write",
+  "file_edit",
+  "file_append",
+  "git_operations",
+  "browser",
+  "browser_open",
+  "http_request",
+  "web_fetch",
+  "web_search",
+  "schedule",
+  "cron_add",
+  "cron_remove",
+  "cron_update",
+  "cron_run",
+  "delegate",
+  "composio",
+  "hardware_info",
+  "hardware_memory",
+  "i2c",
+  "spi",
+]
+auto_approve = [
+  "power_device__system_status",
+  "power_device__mqtt_status",
+  "power_device__amp_status",
+  "power_device__capabilities",
+]
+always_ask = []
+block_high_risk_commands = true
+allow_sensitive_file_reads = false
+allow_sensitive_file_writes = false
+max_actions_per_hour = 120
+max_cost_per_day_cents = 200
+
+[runtime_profiles.edge]
+compact_context = true
+max_tool_iterations = 8
+parallel_tools = false
+
+[mcp]
+enabled = true
+deferred_loading = false
+
+[[mcp.servers]]
+name = "power_device"
+transport = "stdio"
+command = "/userdata/powerclaw/bin/powerclaw-device-mcp"
+args = []
+tool_timeout_secs = 5
+
+[mcp_bundles.device_core]
+servers = ["power_device"]
+
+[agents.powerclaw]
+enabled = true
+model_provider = "custom.power"
+risk_profile = "power_readonly"
+runtime_profile = "edge"
+channels = ["lark.main"]
+mcp_bundles = ["device_core"]
+delegate_same_risk_profile = false
+
+[channels.lark.main]
+enabled = false
+app_id = ""
+app_secret = ""
+use_feishu = true
+receive_mode = "websocket"
+mention_only = true
+per_user_session = true
+stream_mode = "partial"
+approval_timeout_secs = 120
+excluded_tools = [
+  "shell",
+  "process",
+  "file_write",
+  "file_edit",
+  "http_request",
+  "browser",
+  "browser_open",
+  "i2c",
+  "spi",
+]
+
+[gateway]
+host = "127.0.0.1"
+port = 18100
+require_pairing = true
+allow_public_bind = false
+trust_forwarded_headers = false
+
+[memory]
+backend = "sqlite"
+auto_save = true
+conversation_retention_days = 30
+embedding_provider = "none"
+search_mode = "bm25"
+
+[skills]
+open_skills_enabled = false
+allow_scripts = false
+prompt_injection_mode = "compact"
+
+[http_request]
+enabled = false
+allowed_domains = []
+
+[web_fetch]
+enabled = false
+allowed_domains = []
+
+[web_search]
+enabled = false
+
+[browser]
+enabled = false
+allowed_domains = []
+
+[scheduler]
+enabled = false
+
+[heartbeat]
+enabled = false
+
+[goal_loop]
+enabled = false
+
+[plugins]
+enabled = false
+allow = []
+load_paths = []
+
+[peripherals]
+enabled = false
+boards = []
+
+[hardware]
+enabled = false
+transport = "None"
+
+[hooks]
+enabled = false
+
+[observability]
+backend = "none"
+runtime_trace_mode = "none"
+
+[security.audit]
+enabled = true
+log_path = "/userdata/powerclaw/logs/powerclaw-audit.log"
+max_size_mb = 20
+sign_events = false
+
+[security.resources]
+max_memory_mb = 128
+max_cpu_time_seconds = 90
+max_subprocesses = 4
+memory_monitoring = true
