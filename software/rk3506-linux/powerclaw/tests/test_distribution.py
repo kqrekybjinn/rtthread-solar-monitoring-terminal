@@ -52,6 +52,7 @@ def main():
     browser = section(config_text, "browser")
     plugins = section(config_text, "plugins")
     memory = section(config_text, "memory")
+    feishu_peers = section(config_text, "peer_groups.feishu_users")
     check(scalar(gateway, "host") == "127.0.0.1", "gateway is not loopback-only")
     check(scalar(gateway, "allow_public_bind") is False, "public gateway bind enabled")
     check(scalar(lark, "enabled") is False,
@@ -67,6 +68,12 @@ def main():
           "edge configuration must not call an embedding provider")
     check(scalar(memory, "search_mode") == "bm25",
           "edge memory must use keyword search without embeddings")
+    check(scalar(feishu_peers, "channel") == "lark.main",
+          "Feishu peer group must be scoped to lark.main")
+    check(string_array(feishu_peers, "agents") == ["powerclaw"],
+          "Feishu peer group must bind the PowerClaw agent")
+    check(string_array(feishu_peers, "external_peers") == [],
+          "public template must deny all Feishu users until explicitly enrolled")
     check(re.search(r'(?m)^\[cron\]\s*$', config_text) is None,
           "cron is an alias map; disable scheduling through [scheduler]")
 

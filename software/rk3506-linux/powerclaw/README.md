@@ -61,9 +61,14 @@ does not start unless `/userdata/powerclaw/powerclaw.env` contains
    needed. Grant the bot only the message receive/send and message-resource
    permissions required by those functions, then publish the app to the test
    tenant.
-3. On the board, fill the model key, Feishu `app_id`, and `app_secret` in
+3. Add approved Feishu user `open_id` values to
+   `peer_groups.feishu_users.external_peers` in the board config. The public
+   template intentionally uses an empty list, which denies every inbound user.
+   A temporary `"*"` may be used only during controlled first-user enrollment
+   and must be replaced immediately with the observed `open_id`.
+4. On the board, fill the model key, Feishu `app_id`, and `app_secret` in
    `/userdata/powerclaw/powerclaw.env`. Keep the file at mode `0600`.
-4. Set `POWERCLAW_ENABLED=1`, run `/etc/init.d/S97powerclaw restart`, and check
+5. Set `POWERCLAW_ENABLED=1`, run `/etc/init.d/S97powerclaw restart`, and check
    `/userdata/powerclaw/logs/powerclaw.log` for the Lark WebSocket connection
    and `power_device` MCP registration.
 

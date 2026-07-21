@@ -104,6 +104,11 @@ excluded_tools = [
   "spi",
 ]
 
+[peer_groups.feishu_users]
+channel = "lark.main"
+agents = ["powerclaw"]
+external_peers = []
+
 [gateway]
 host = "127.0.0.1"
 port = 18100
